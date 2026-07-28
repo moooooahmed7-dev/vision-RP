@@ -20,6 +20,49 @@
             align-items: center;
             padding: 40px 20px;
             min-height: 100vh;
+            cursor: default;
+        }
+
+        /* تصميم الماوس التفاعلي */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e11d48;
+            border-radius: 50%;
+            position: absolute;
+            pointer-events: none;
+            transition: transform 0.1s ease;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* لوحة التحميل مع تأثير الكتابة والصوت */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #09090b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: #e11d48;
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.8s ease;
+        }
+
+        #typewriterText {
+            border-left: 3px solid #e11d48;
+            padding-left: 5px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            max-width: 800px;
         }
 
         .container {
@@ -32,13 +75,35 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         h1 {
-            text-align: center;
-            margin-bottom: 25px;
             color: #e11d48;
-            font-size: 26px;
+            font-size: 24px;
             letter-spacing: 1px;
             text-transform: uppercase;
+        }
+
+        #musicBtn {
+            background: #27272a;
+            color: #fff;
+            border: 1px solid #3f3f46;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        #musicBtn:hover {
+            border-color: #e11d48;
         }
 
         .form-row {
@@ -123,8 +188,17 @@
 </head>
 <body>
 
+    <div id="loadingScreen">
+        <div id="typewriterText"></div>
+    </div>
+
+    <div class="cursor" id="customCursor"></div>
+
     <div class="container">
-        <h1>VISION ARMY ROLEPLAY</h1>
+        <div class="header-section">
+            <h1>VISION RP</h1>
+            <button onclick="toggleMusic()" id="musicBtn">🔇 تشغيل الموسيقى</button>
+        </div>
         
         <form id="applyForm">
             <div class="form-row">
@@ -149,7 +223,7 @@
                 </div>
                 <div class="form-group">
                     <label>عدد ساعات FiveM</label>
-                    <input type="number" placeholder="عدد ساعات Flex CitArmyrmy" required>
+                    <input type="number" placeholder="عدد ساعات FiveM" required>
                 </div>
             </div>
 
@@ -187,18 +261,80 @@
     </audio>
 
     <script>
-        // تشغيل الموسيقى فور أول ضغطة ماوس داخل الصفحة
-        document.addEventListener('click', function() {
-            var audio = document.getElementById("bgMusic");
-            audio.play().catch(function(error) {
-                console.log("Audio play failed:", error);
-            });
-        }, { once: true });
+        // صوت التكتكة أثناء الكتابة
+        function playClickSound() {
+            try {
+                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let oscillator = audioCtx.createOscillator();
+                let gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
+        }
 
-        // الرسالة الناتجة عند إرسال النموذج
+        // النصوص المكتوبة بالترتيب
+        const textToType = "مرحباً بكم...\nتم صنع هذا الموقع بصفة [ ريكو ]\n\nأهلاً بك في عالم فليكس سيتي\nسيرفر Vision RP - السيرفر القوي العربي 🔥";
+        let charIndex = 0;
+        const speed = 50; 
+        const targetElement = document.getElementById("typewriterText");
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                let currentChar = textToType.charAt(charIndex);
+                targetElement.innerHTML += currentChar;
+                
+                if (currentChar !== ' ' && currentChar !== '\n') {
+                    playClickSound();
+                }
+
+                charIndex++;
+                setTimeout(typeWriter, speed);
+            } else {
+                setTimeout(function() {
+                    let loader = document.getElementById('loadingScreen');
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 800);
+                }, 2000);
+            }
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(typeWriter, 500);
+        });
+
+        // حركة مؤشر الماوس
+        const cursor = document.getElementById('customCursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // زر تشغيل/إيقاف الموسيقى
+        function toggleMusic() {
+            var audio = document.getElementById("bgMusic");
+            var btn = document.getElementById("musicBtn");
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "🔊 إيقاف الموسيقى";
+            } else {
+                audio.pause();
+                btn.innerText = "🔇 تشغيل الموسيقى";
+            }
+        }
+
         document.getElementById('applyForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('تم إرسال طلبك بنجاح إلى سيرفر Vision Army!');
+            alert('تم إرسال طلبك بنجاح إلى سيرفر Vision RP!');
         });
     </script>
 
