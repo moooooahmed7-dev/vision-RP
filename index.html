@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision RP - تقديم السيرفر</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121214;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #e11d48;
+            font-size: 26px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #a1a1aa;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #e11d48;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #27272a;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #d4d4d8;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: #e11d48;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: #e11d48;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #be123c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>VISION ARMY ROLEPLAY</h1>
+        
+        <form id="applyForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم الحقيقي</label>
+                    <input type="text" placeholder="اكتب اسمك الحقيقي" required>
+                </div>
+                <div class="form-group">
+                    <label>العمر</label>
+                    <input type="number" placeholder="العمر" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>هل لعبت رول بلاي من قبل؟</label>
+                    <select required>
+                        <option value="" disabled selected>اختر إجابة</option>
+                        <option value="yes">نعم</option>
+                        <option value="no">لا</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>عدد ساعات FiveM</label>
+                    <input type="number" placeholder="عدد ساعات Flex CitArmyrmy" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>اسم الشخصية داخل اللعبة</label>
+                <input type="text" placeholder="اسم الشخصية بالكامل" required>
+            </div>
+
+            <div class="form-group">
+                <label>قصة الشخصية</label>
+                <textarea placeholder="اكتب نبذة مختصرة عن قصة شخصيتك..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>لماذا تريد الانضمام إلينا؟</label>
+                <textarea placeholder="لماذا تريد الانضمام إلى سيرفر Vision RP؟" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Discord Tag</label>
+                <input type="text" placeholder="مثال: username#0000 أو username" required>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms" style="margin:0; color:#fff;">لقد قرأت قوانين السيرفر بالكامل، وأتعهد بالالتزام بها وبقرارات الإدارة.</label>
+            </div>
+
+            <button type="submit" class="btn-submit">إرسال الطلب</button>
+        </form>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // تشغيل الموسيقى فور أول ضغطة ماوس داخل الصفحة
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgMusic");
+            audio.play().catch(function(error) {
+                console.log("Audio play failed:", error);
+            });
+        }, { once: true });
+
+        // الرسالة الناتجة عند إرسال النموذج
+        document.getElementById('applyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('تم إرسال طلبك بنجاح إلى سيرفر Vision Army!');
+        });
+    </script>
+
+</body>
+</html>
