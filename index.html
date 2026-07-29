@@ -10,7 +10,7 @@
             --primary: #ff003c;
             --secondary: #00f2ff;
             --bg: #050505;
-            --card-bg: rgba(10, 10, 10, 0.95);
+            --card-bg: #0a0a0a;
         }
 
         * { 
@@ -20,11 +20,11 @@
             font-family: 'Tajawal', sans-serif; 
         }
 
-        body, html {
-            height: 100%;
+        html, body {
             width: 100%;
-            overflow-x: hidden;
-            background: var(--bg);
+            min-height: 100vh;
+            background-color: var(--bg);
+            color: #fff;
         }
 
         body {
@@ -32,504 +32,190 @@
                 linear-gradient(rgba(255, 0, 60, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 0, 60, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
-            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 15px;
+            padding: 20px 10px;
         }
 
+        /* شاشة دخول النظام */
         #startOverlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            z-index: 10000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 99999;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            transition: opacity 0.5s ease;
         }
 
         .start-btn {
-            padding: 20px 40px;
+            padding: 18px 36px;
             border: 2px solid var(--primary);
             color: var(--primary);
-            font-family: 'Orbitron';
-            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            background: transparent;
-            box-shadow: 0 0 20px var(--primary);
+            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.6);
             animation: pulse 1.5s infinite;
             cursor: pointer;
+            border-radius: 8px;
+            outline: none;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 60, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
         }
 
+        .start-subtext {
+            margin-top: 15px;
+            color: #666;
+            font-size: 11px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* الحاوية الرئيسية */
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 550px;
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 16px;
+            padding: 25px 20px;
             position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: none;
-            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+            border: 1px solid rgba(255, 0, 60, 0.3);
+            display: none; /* تظهر عند ضغط زر الدخول */
+            margin: auto;
         }
 
-        .container::after {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg, var(--primary), transparent, var(--secondary), transparent);
-            background-size: 400%;
-            z-index: -1;
-            border-radius: 22px;
-            animation: move-border 10s linear infinite;
+        .header { 
+            text-align: center; 
+            margin-bottom: 25px; 
         }
 
-        @keyframes move-border {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header { text-align: center; margin-bottom: 20px; }
         .header h1 {
-            font-family: 'Orbitron';
-            font-size: clamp(22px, 6vw, 38px);
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--primary);
+            letter-spacing: 2px;
         }
 
         .dev-badge {
-            margin-top: 5px;
-            font-size: 11px;
-            color: #888;
-            letter-spacing: 2px;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #aaa;
+            letter-spacing: 1px;
         }
-        .dev-badge span { color: var(--primary); }
-
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
-
-        .form-group { margin-bottom: 12px; text-align: right; }
-        label { color: var(--primary); font-size: 12px; font-weight: 800; display: block; margin-bottom: 6px; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            outline: none;
-            font-size: 14px;
+        .dev-badge span { 
+            color: var(--primary); 
+            font-weight: bold;
         }
-
-        input:focus, textarea:focus { border-color: var(--secondary); }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Orbitron';
-            font-weight: 900;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 5px;
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover { filter: brightness(1.2); transform: translateY(-2px); }
-
-        .scanner {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-            top: 0; left: 0;
-            box-shadow: 0 0 15px var(--primary);
-            animation: scan 4s linear infinite;
-        }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-    </style>
-</head>
-<body>
-
-    <div id="startOverlay" onclick="startSystem()">
-        <button class="start-btn">دخول النظام</button>
-        <p style="margin-top: 15px; color: #444; font-size: 10px; font-family: 'Orbitron';">CLICK TO INITIALIZE VISION AI</p>
-    </div>
-
-    <div class="container" id="mainContainer">
-        <div class="scanner"></div>
-        <div class="header">
-            <h1>VISION RP</h1>
-            <div class="dev-badge">BY: <span>RICO</span> & <span>ABDULLAH</span></div>
-        </div>
-        
-        <form id="applyForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" required>
-                </div>
-                <div class="form-group">
-                    <label>العمر</label>
-                    <input type="number" id="age" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الشخصية</label>
-                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
-            </div>
-
-            <div class="form-group">
-                <label>قصة الشخصية</label>
-                <textarea id="story" rows="3" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>معرف الديسكورد</label>
-                <input type="text" id="discord" placeholder="Username" required>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-submit">إرسال البيانات</button>
-        </form>
-    </div>
-
-    <script>
-        const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
-
-        function robotSpeak() {
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance();
-                speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-                speech.lang = 'ar-SA';
-                speech.rate = 0.9;
-                window.speechSynthesis.speak(speech);
-            }
-        }
-
-        function startSystem() {
-            document.getElementById('startOverlay').style.display = 'none';
-            const container = document.getElementById('mainContainer');
-            container.style.display = 'block';
-            robotSpeak();
-        }
-
-        document.getElementById('applyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            
-            const data = {
-                embeds: [{
-                    title: "📥 طلب انضمام جديد",
-                    color: 16711740,
-                    fields: [
-                        { name: "👤 الاسم", value: document.getElementById('realName').value, inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
-                        { name: "🎭 الشخصية", value: document.getElementById('charName').value, inline: true },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value, inline: true },
-                        { name: "📜 القصة", value: document.getElementById('story').value }
-                    ],
-                    footer: { text: "VISION RP System" }
-                }]
-            };
-
-            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا") {
-                alert("يرجى وضع رابط الويب هوك أولاً");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerText = "جاري الإرسال...";
-
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                alert('✅ تم الإرسال بنجاح!');
-                location.reload();
-            } catch (error) {
-                alert('❌ فشل الإرسال');
-                btn.disabled = false;
-                btn.innerText = "إرسال البيانات";
-            }
-        });
-    </script>
-</body>
-</html>
-        .header h1 {
-            font-family: 'Orbitron';
-            font-size: clamp(22px, 6vw, 38px);
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
-        }
-
-        .dev-badge {
-            margin-top: 5px;
-            font-size: 11px;
-            color: #888;
-            letter-spacing: 2px;
-        }
-        .dev-badge span { color: var(--primary); }
-
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
-
-        .form-group { margin-bottom: 12px; text-align: right; }
-        label { color: var(--primary); font-size: 12px; font-weight: 800; display: block; margin-bottom: 6px; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            outline: none;
-            font-size: 14px;
-        }
-
-        input:focus, textarea:focus { border-color: var(--secondary); }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Orbitron';
-            font-weight: 900;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 5px;
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover { filter: brightness(1.2); transform: translateY(-2px); }
-
-        .scanner {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-            top: 0; left: 0;
-            box-shadow: 0 0 15px var(--primary);
-            animation: scan 4s linear infinite;
-        }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-    </style>
-</head>
-<body>
-
-    <div id="startOverlay" onclick="startSystem()">
-        <button class="start-btn">دخول النظام</button>
-        <p style="margin-top: 15px; color: #444; font-size: 10px; font-family: 'Orbitron';">CORE INITIALIZATION</p>
-    </div>
-
-    <div class="container" id="mainContainer">
-        <div class="scanner"></div>
-        <div class="header">
-            <h1>VISION RP</h1>
-            <div class="dev-badge">BY: <span>RICO</span> & <span>ABDULLAH</span></div>
-        </div>
-        
-        <form id="applyForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" required>
-                </div>
-                <div class="form-group">
-                    <label>العمر</label>
-                    <input type="number" id="age" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الشخصية</label>
-                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
-            </div>
-
-            <div class="form-group">
-                <label>قصة الشخصية</label>
-                <textarea id="story" rows="3" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>معرف الديسكورد</label>
-                <input type="text" id="discord" placeholder="Username" required>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-submit">إرسال البيانات</button>
-        </form>
-    </div>
-
-    <script>
-        const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
-
-        function robotSpeak() {
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance();
-                speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-                speech.lang = 'ar-SA';
-                speech.rate = 0.9;
-                window.speechSynthesis.speak(speech);
-            }
-        }
-
-        function startSystem() {
-            document.getElementById('startOverlay').style.display = 'none';
-            const container = document.getElementById('mainContainer');
-            container.style.display = 'block';
-            robotSpeak();
-        }
-
-        document.getElementById('applyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            
-            const data = {
-                embeds: [{
-                    title: "📥 طلب انضمام جديد",
-                    color: 16711740,
-                    fields: [
-                        { name: "👤 الاسم", value: document.getElementById('realName').value, inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
-                        { name: "🎭 الشخصية", value: document.getElementById('charName').value, inline: true },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value, inline: true },
-                        { name: "📜 القصة", value: document.getElementById('story').value }
-                    ],
-                    footer: { text: "VISION RP System" }
-                }]
-            };
-
-            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا") {
-                alert("يرجى وضع رابط الويب هوك أولاً");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerText = "جاري الإرسال...";
-
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                alert('✅ تم الإرسال بنجاح!');
-                location.reload();
-            } catch (error) {
-                alert('❌ فشل الإرسال');
-                btn.disabled = false;
-                btn.innerText = "إرسال البيانات";
-            }
-        });
-    </script>
-</body>
-</html>
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 {
-            font-family: 'Orbitron';
-            font-size: clamp(24px, 7vw, 45px); /* حجم خط مرن للجوال */
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
-        }
-
-        .dev-badge {
-            margin-top: 5px;
-            font-size: 11px;
-            color: #888;
-            letter-spacing: 2px;
-        }
-        .dev-badge span { color: var(--primary); }
 
         /* الاستمارة */
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        .form-row { 
+            display: flex; 
+            flex-direction: column;
+            gap: 12px; 
+            margin-bottom: 12px;
+        }
 
-        .form-group { margin-bottom: 15px; text-align: right; }
-        label { color: var(--primary); font-size: 12px; font-weight: 800; display: block; margin-bottom: 8px; }
+        @media (min-width: 480px) {
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-group { 
+            margin-bottom: 14px; 
+            text-align: right; 
+        }
+
+        label { 
+            color: var(--primary); 
+            font-size: 13px; 
+            font-weight: 800; 
+            display: block; 
+            margin-bottom: 6px; 
+        }
         
         input, textarea {
             width: 100%;
             padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
+            background: #141414;
+            border: 1px solid #2a2a2a;
             border-radius: 8px;
             color: #fff;
             outline: none;
             font-size: 14px;
+            transition: border-color 0.3s;
         }
 
-        input:focus { border-color: var(--secondary); }
+        input:focus, textarea:focus { 
+            border-color: var(--secondary); 
+            box-shadow: 0 0 8px rgba(0, 242, 255, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
 
         .btn-submit {
             width: 100%;
-            padding: 15px;
-            background: var(--primary);
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), #b3002a);
             color: #fff;
             border: none;
-            border-radius: 10px;
-            font-family: 'Orbitron';
+            border-radius: 8px;
+            font-family: 'Orbitron', 'Tajawal', sans-serif;
             font-weight: 900;
             font-size: 16px;
             cursor: pointer;
             margin-top: 10px;
-            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4);
+            transition: transform 0.2s, background 0.3s;
         }
 
-        .btn-submit:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .btn-submit:active { 
+            transform: scale(0.98); 
+        }
 
+        /* خط مسح نيون زيني */
         .scanner {
             position: absolute;
             width: 100%;
             height: 2px;
             background: var(--primary);
             top: 0; left: 0;
-            box-shadow: 0 0 15px var(--primary);
+            box-shadow: 0 0 10px var(--primary);
             animation: scan 4s linear infinite;
+            border-radius: 16px 16px 0 0;
         }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        @keyframes scan { 
+            0% { top: 0; opacity: 0; } 
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; } 
+        }
     </style>
 </head>
 <body>
 
-    <div id="startOverlay" onclick="startSystem()">
-        <button class="start-btn">دخول النظام</button>
-        <p style="margin-top: 15px; color: #444; font-size: 10px; font-family: 'Orbitron';">CORE INITIALIZATION</p>
+    <div id="startOverlay">
+        <button class="start-btn" id="startBtn">دخول النظام</button>
+        <p class="start-subtext">CLICK TO INITIALIZE VISION AI</p>
     </div>
 
     <div class="container" id="mainContainer">
@@ -543,26 +229,26 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" required>
+                    <input type="text" id="realName" placeholder="اكتب اسمك الحقيقي" required>
                 </div>
                 <div class="form-group">
                     <label>العمر</label>
-                    <input type="number" id="age" required>
+                    <input type="number" id="age" placeholder="العمر" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>اسم الشخصية</label>
-                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
+                <label>اسم الشخصية داخل اللعبة</label>
+                <input type="text" id="charName" placeholder="مثال: Rico_Abdullah" required>
             </div>
 
             <div class="form-group">
                 <label>قصة الشخصية</label>
-                <textarea id="story" rows="3" required></textarea>
+                <textarea id="story" placeholder="اكتب قصة مختصرة لشخصيتك..." required></textarea>
             </div>
 
             <div class="form-group">
-                <label>معرف الديسكورد</label>
+                <label>معرف الديسكورد (Discord Tag)</label>
                 <input type="text" id="discord" placeholder="Username" required>
             </div>
 
@@ -575,228 +261,47 @@
         const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
 
         function robotSpeak() {
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance();
-                speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-                speech.lang = 'ar-SA';
-                speech.rate = 0.9;
-                window.speechSynthesis.speak(speech);
-            }
-        }
-
-        function startSystem() {
-            document.getElementById('startOverlay').style.display = 'none';
-            const container = document.getElementById('mainContainer');
-            container.style.display = 'block';
-            robotSpeak();
-        }
-
-        document.getElementById('applyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            
-            const data = {
-                embeds: [{
-                    title: "📥 طلب انضمام جديد",
-                    color: 16711740,
-                    fields: [
-                        { name: "👤 الاسم", value: document.getElementById('realName').value, inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
-                        { name: "🎭 الشخصية", value: document.getElementById('charName').value, inline: true },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value, inline: true },
-                        { name: "📜 القصة", value: document.getElementById('story').value }
-                    ],
-                    footer: { text: "VISION RP System" }
-                }]
-            };
-
-            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا") {
-                alert("يرجى وضع رابط الويب هوك أولاً");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerText = "جاري الإرسال...";
-
             try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                alert('✅ تم الإرسال بنجاح!');
-                location.reload();
-            } catch (error) {
-                alert('❌ فشل الإرسال');
-                btn.disabled = false;
-                btn.innerText = "إرسال البيانات";
-            }
-        });
-    </script>
-</body>
-</html>            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .scanner {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: var(--primary);
-            top: 0;
-            left: 0;
-            box-shadow: 0 0 20px var(--primary);
-            animation: scan 4s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0; opacity: 0; }
-            50% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 {
-            font-family: 'Orbitron';
-            font-size: clamp(30px, 8vw, 50px);
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 5px;
-        }
-
-        .dev-badge {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #888;
-            letter-spacing: 2px;
-        }
-        .dev-badge span { color: var(--primary); font-weight: bold; }
-
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-
-        .form-group { margin-bottom: 25px; text-align: right; }
-        label { color: var(--primary); font-size: 13px; font-weight: 800; display: block; margin-bottom: 10px; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 20px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Orbitron';
-            font-weight: 900;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover {
-            transform: scale(1.02);
-            filter: brightness(1.2);
-        }
-
-        .btn-submit:disabled {
-            background: #444;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="startOverlay" onclick="startSystem()">
-        <button class="start-btn">دخول النظام</button>
-        <p style="margin-top: 20px; color: #555; font-size: 12px; font-family: 'Orbitron';">INITIALIZE VISION AI</p>
-    </div>
-
-    <div class="container" id="mainContainer">
-        <div class="scanner"></div>
-        
-        <div class="header">
-            <h1>VISION RP</h1>
-            <div class="dev-badge">BY: <span>RICO</span> & <span>ABDULLAH</span></div>
-        </div>
-        
-        <form id="applyForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" required placeholder="اسمهك هنا">
-                </div>
-                <div class="form-group">
-                    <label>العمر</label>
-                    <input type="number" id="age" required placeholder="+18">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الشخصية داخل اللعبة</label>
-                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
-            </div>
-
-            <div class="form-group">
-                <label>قصة الشخصية</label>
-                <textarea id="story" rows="4" placeholder="اكتب نبذة عن قصة شخصيتك..." required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>معرف الديسكورد</label>
-                <input type="text" id="discord" placeholder="username" required>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-submit">إرسال البيانات</button>
-        </form>
-    </div>
-
-    <script>
-        // رابط الويب هوك الخاص بك - ضعه هنا
-        const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
-
-        function robotSpeak() {
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance();
-                speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-                speech.lang = 'ar-SA';
-                speech.rate = 0.9;
-                speech.pitch = 1;
-                window.speechSynthesis.speak(speech);
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const speech = new SpeechSynthesisUtterance();
+                    speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
+                    speech.lang = 'ar-SA';
+                    speech.rate = 0.9;
+                    window.speechSynthesis.speak(speech);
+                }
+            } catch(e) {
+                console.log("Speech synthesis unsupported or blocked");
             }
         }
 
         function startSystem() {
-            const overlay = document.getElementById('startOverlay');
-            const container = document.getElementById('mainContainer');
-            
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                container.style.display = 'block';
-                setTimeout(() => {
-                    container.classList.add('active');
-                    robotSpeak();
-                }, 100);
-            }, 800);
+            try {
+                const overlay = document.getElementById('startOverlay');
+                const container = document.getElementById('mainContainer');
+                
+                if (overlay) overlay.style.display = 'none';
+                if (container) container.style.display = 'block';
+
+                robotSpeak();
+            } catch(e) {
+                document.getElementById('startOverlay').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            }
+        }
+
+        const overlay = document.getElementById('startOverlay');
+        const startBtn = document.getElementById('startBtn');
+
+        if (overlay) {
+            overlay.addEventListener('click', startSystem);
+            overlay.addEventListener('touchstart', startSystem, {passive: true});
+        }
+        if (startBtn) {
+            startBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                startSystem();
+            });
         }
 
         document.getElementById('applyForm').addEventListener('submit', async function(e) {
@@ -805,22 +310,21 @@
             
             const data = {
                 embeds: [{
-                    title: "📥 طلب انضمام جديد - Vision RP",
+                    title: "📥 طلب انضمام جديد - VISION RP",
                     color: 16711740,
                     fields: [
-                        { name: "👤 الاسم الحقيقي", value: document.getElementById('realName').value, inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
-                        { name: "🎭 اسم الشخصية", value: document.getElementById('charName').value, inline: true },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value, inline: true },
-                        { name: "📜 قصة الشخصية", value: document.getElementById('story').value }
+                        { name: "👤 الاسم", value: document.getElementById('realName').value || "غير محدد", inline: true },
+                        { name: "🔞 العمر", value: document.getElementById('age').value || "غير محدد", inline: true },
+                        { name: "🎭 الشخصية", value: document.getElementById('charName').value || "غير محدد", inline: true },
+                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value || "غير محدد", inline: true },
+                        { name: "📜 القصة", value: document.getElementById('story').value || "غير محدد" }
                     ],
-                    footer: { text: "Dev by Rico & Abdullah" },
-                    timestamp: new Date()
+                    footer: { text: "VISION RP System | By Rico & Abdullah" }
                 }]
             };
 
-            if (!WEBHOOK_URL || WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا") {
-                alert("خطأ: لم يتم ضبط رابط الويب هوك (Discord Webhook) في الكود.");
+            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا" || !WEBHOOK_URL) {
+                alert("يرجى وضع رابط الويب هوك في الكود أولاً!");
                 return;
             }
 
@@ -834,412 +338,18 @@
                     body: JSON.stringify(data)
                 });
 
-                if (response.ok) {
-                    alert('✅ تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.');
-                    document.getElementById('applyForm').reset();
+                if (response.ok || response.status === 204) {
+                    alert('✅ تم إرسال طلبك بنجاح إلى السيرفر!');
+                    location.reload();
                 } else {
-                    throw new Error();
+                    throw new Error('Server responded with error');
                 }
             } catch (error) {
-                alert('❌ حدث خطأ أثناء الإرسال، تأكد من رابط الويب هوك.');
-            } finally {
+                alert('❌ حدث خطأ أثناء الإرسال، يرجى التأكد من رابط الويب هوك.');
                 btn.disabled = false;
                 btn.innerText = "إرسال البيانات";
             }
         });
     </script>
-</body>
-</html>            height: 3px;
-            background: var(--primary);
-            top: 0;
-            left: 0;
-            box-shadow: 0 0 20px var(--primary);
-            animation: scan 4s linear infinite;
-            z-index: 10;
-        }
-
-        @keyframes scan {
-            0% { top: 0; opacity: 0; }
-            50% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 {
-            font-family: 'Orbitron';
-            font-size: 50px;
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 8px;
-        }
-
-        .dev-badge {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #888;
-            letter-spacing: 2px;
-        }
-
-        .dev-badge span { color: var(--primary); font-weight: bold; }
-
-        /* الاستمارة */
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-
-        .form-group { margin-bottom: 25px; }
-        label { color: var(--primary); font-size: 13px; font-weight: 800; display: block; margin-bottom: 10px; text-transform: uppercase; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid #222;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
-            transition: 0.3s;
-            outline: none;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--secondary);
-            background: rgba(0, 242, 255, 0.05);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 20px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Orbitron';
-            font-weight: 900;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.5);
-            transition: 0.4s;
-        }
-
-        .btn-submit:hover {
-            transform: scale(1.02);
-            filter: brightness(1.2);
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.8);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- شاشة البداية الإجبارية لتشغيل الصوت -->
-    <div id="startOverlay" onclick="startSystem()">
-        <button class="start-btn">دخول النظام</button>
-        <p style="margin-top: 20px; color: #555; font-size: 12px;">CLICK TO INITIALIZE VISION AI</p>
-    </div>
-
-    <div class="container" id="mainContainer">
-        <div class="scanner"></div>
-        
-        <div class="header">
-            <h1>VISION RP</h1>
-            <div class="dev-badge">BY: <span>RICO</span> & <span>ABDULLAH</span></div>
-        </div>
-        
-        <form id="applyForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" required>
-                </div>
-                <div class="form-group">
-                    <label>العمر</label>
-                    <input type="number" id="age" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الشخصية داخل اللعبة</label>
-                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
-            </div>
-
-            <div class="form-group">
-                <label>قصة الشخصية</label>
-                <textarea id="story" rows="4" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>معرف الديسكورد</label>
-                <input type="text" id="discord" placeholder="username#0000" required>
-            </div>
-
-            <button type="submit" class="btn-submit">إرسال البيانات</button>
-        </form>
-    </div>
-
-    <script>
-        // وظيفة الروبوت الصوتي
-        function robotSpeak() {
-            const speech = new SpeechSynthesisUtterance();
-            // النص المطلوب بالظبط
-            speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-            speech.lang = 'ar-SA';
-            speech.rate = 0.85; // سرعة روبوتية فخمة
-            speech.pitch = 0.8; // طبقة صوت عميقة
-            window.speechSynthesis.speak(speech);
-        }
-
-        // تشغيل النظام عند الضغط
-        function startSystem() {
-            // إخفاء شاشة البداية
-            document.getElementById('startOverlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('startOverlay').style.display = 'none';
-                
-                // إظهار الاستمارة
-                document.getElementById('mainContainer').style.display = 'block';
-                
-                // تشغيل صوت الروبوت فوراً
-                robotSpeak();
-            }, 800);
-        }
-
-        // إرسال البيانات للديسكورد (Webhook)
-        const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
-
-        document.getElementById('applyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.querySelector('.btn-submit');
-            btn.innerText = "جاري الإرسال...";
-            
-            const data = {
-                embeds: [{
-                    title: "📥 طلب انضمام جديد - Vision RP",
-                    color: 16711740,
-                    fields: [
-                        { name: "👤 المتقدم", value: document.getElementById('realName').value, inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
-                        { name: "🎭 الشخصية", value: document.getElementById('charName').value },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value },
-                        { name: "📜 القصة", value: document.getElementById('story').value }
-                    ],
-                    footer: { text: "Dev by Rico & Abdullah" }
-                }]
-            };
-
-            if(WEBHOOK_URL !== "ضع_رابط_الويب_هوك_هنا") {
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
-                }).then(() => {
-                    alert('تم إرسال طلبك بنجاح!');
-                    location.reload();
-                });
-            } else {
-                alert('تم الإرسال وهمياً (يجب وضع رابط الويب هوك في الكود)');
-                btn.innerText = "تأكيد إرسال الملف";
-            }
-        });
-    </script>
-</body>
-</html>            color: #a1a1aa;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 15px;
-            background-color: #1f1f23;
-            border: 1px solid #27272a;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #e11d48;
-            box-shadow: 0 0 10px rgba(225, 29, 72, 0.2);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background-color: #1f1f23;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 13px;
-            color: #d4d4d8;
-            border: 1px solid #27272a;
-        }
-
-        .checkbox-group input {
-            width: 18px;
-            height: 18px;
-            accent-color: #e11d48;
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #e11d48, #be123c);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-        }
-
-        .btn-submit:hover {
-            background: linear-gradient(135deg, #be123c, #9f1239);
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
-<body>
-
-    <div id="loadingScreen">
-        <div id="typewriterText"></div>
-    </div>
-
-    <div class="container">
-        <div class="header-section">
-            <h1>VISION RP</h1>
-            <div class="server-badge">FLEX CITY 🔥</div>
-        </div>
-        
-        <form id="applyForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم الحقيقي</label>
-                    <input type="text" placeholder="اكتب اسمك الحقيقي" required>
-                </div>
-                <div class="form-group">
-                    <label>العمر</label>
-                    <input type="number" placeholder="العمر" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>هل لعبت رول بلاي من قبل؟</label>
-                    <select required>
-                        <option value="" disabled selected>اختر إجابة</option>
-                        <option value="yes">نعم</option>
-                        <option value="no">لا</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>عدد ساعات فليكس سيتي من يومك</label>
-                    <input type="number" placeholder="عدد الساعات" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الشخصية داخل اللعبة</label>
-                <input type="text" placeholder="اسم الشخصية بالكامل" required>
-            </div>
-
-            <div class="form-group">
-                <label>قصة الشخصية</label>
-                <textarea placeholder="اكتب نبذة مختصرة عن قصة شخصيتك..." required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>لماذا تريد الانضمام إلينا؟</label>
-                <textarea placeholder="لماذا تريد الانضمام إلى سيرفر Vision RP؟" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Discord Tag</label>
-                <input type="text" placeholder="مثال: username#0000 أو username" required>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="terms" required>
-                <label for="terms" style="margin:0; color:#fff; cursor:pointer;">لقد قرأت قوانين السيرفر بالكامل، وأتعهد بالالتزام بها وبقرارات الإدارة.</label>
-            </div>
-
-            <button type="submit" class="btn-submit">إرسال الطلب</button>
-        </form>
-    </div>
-
-    <script>
-        // مولد صوت التكتكة برمجياً (بيشتغل تلقائي مع كل حرف بيتكتب)
-        function playClickSound() {
-            try {
-                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let oscillator = audioCtx.createOscillator();
-                let gainNode = audioCtx.createGain();
-                
-                oscillator.type = 'triangle';
-                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-                
-                gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.04);
-            } catch(e) {}
-        }
-
-        // الكلام اللي هيتكتب بالتكتكة
-        const textToType = "مرحباً بكم...\nتم صنع هذا الموقع بصفة [ ريكو ]\n\nأهلاً بك في عالم فليكس سيتي\nسيرفر Vision RP - السيرفر القوي العربي 🔥";
-        let charIndex = 0;
-        const speed = 45; 
-        const targetElement = document.getElementById("typewriterText");
-
-        function typeWriter() {
-            if (charIndex < textToType.length) {
-                let currentChar = textToType.charAt(charIndex);
-                targetElement.innerHTML += currentChar;
-                
-                // تشغيل صوت التكتكة مع الحروف الفعالة
-                if (currentChar !== ' ' && currentChar !== '\n') {
-                    playClickSound();
-                }
-
-                charIndex++;
-                setTimeout(typeWriter, speed);
-            } else {
-                // بعد ما يخلص كتابة، يستنى ثانيتين ويخفي شاشة التحميل بانيميشن فخم
-                setTimeout(function() {
-                    let loader = document.getElementById('loadingScreen');
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 800);
-                }, 2000);
-            }
-        }
-
-        // بدء شاشة التحميل أول ما الموقع يفتح
-        window.addEventListener('load', function() {
-            setTimeout(typeWriter, 500);
-        });
-
-        // رسالة نجاح الإرسال
-        document.getElementById('applyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('تم إرسال طلبك بنجاح إلى سيرفر Vision RP!');
-        });
-    </script>
-
 </body>
 </html>
