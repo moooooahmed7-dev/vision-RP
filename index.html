@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VISION RP | FLEX CITY</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
@@ -10,9 +10,10 @@
             --primary: #ff003c;
             --secondary: #00f2ff;
             --bg: #050505;
-            --card-bg: #0a0a0a;
+            --card-bg: rgba(10, 10, 10, 0.95);
         }
 
+        /* تصفير الإعدادات وضمان التوسط */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -20,202 +21,164 @@
             font-family: 'Tajawal', sans-serif; 
         }
 
-        html, body {
+        body, html {
+            height: 100%;
             width: 100%;
-            min-height: 100vh;
-            background-color: var(--bg);
-            color: #fff;
+            overflow-x: hidden;
         }
 
         body {
+            background: var(--bg);
             background-image: 
                 linear-gradient(rgba(255, 0, 60, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 0, 60, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
+            color: #fff;
+            
+            /* أهم جزء للتوسط */
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 10px;
+            justify-content: center; /* توسيط أفقي */
+            align-items: center;     /* توسيط عمودي */
+            padding: 20px;           /* مسافة أمان للجوال */
         }
 
-        /* شاشة دخول النظام */
+        /* شاشة البداية */
         #startOverlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            z-index: 99999;
+            inset: 0;
+            background: #000;
+            z-index: 10000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: opacity 0.5s ease;
         }
 
         .start-btn {
-            padding: 18px 36px;
+            padding: 20px 40px;
             border: 2px solid var(--primary);
             color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
+            font-family: 'Orbitron';
+            font-size: 20px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 25px rgba(255, 0, 60, 0.6);
+            letter-spacing: 5px;
+            background: transparent;
+            box-shadow: 0 0 20px var(--primary);
             animation: pulse 1.5s infinite;
             cursor: pointer;
-            border-radius: 8px;
-            outline: none;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 60, 0.9); }
-            100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .start-subtext {
-            margin-top: 15px;
-            color: #666;
-            font-size: 11px;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-        }
-
-        /* الحاوية الرئيسية */
+        /* الحاوية الرئيسية - معدلة للتوسط */
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 650px; 
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 25px 20px;
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 35px;
             position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            border: 1px solid rgba(255, 0, 60, 0.3);
-            display: none; /* تظهر عند ضغط زر الدخول */
-            margin: auto;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none; 
+            margin: auto; 
         }
 
-        .header { 
-            text-align: center; 
-            margin-bottom: 25px; 
+        /* إطار النيون */
+        .container::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--primary), transparent, var(--secondary), transparent);
+            background-size: 400%;
+            z-index: -1;
+            border-radius: 22px;
+            animation: move-border 10s linear infinite;
         }
 
+        @keyframes move-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
         .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            color: #ffffff;
-            text-shadow: 0 0 10px var(--primary);
-            letter-spacing: 2px;
+            font-family: 'Orbitron';
+            font-size: clamp(24px, 7vw, 45px); 
+            background: linear-gradient(to bottom, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
         }
 
         .dev-badge {
-            margin-top: 6px;
-            font-size: 12px;
-            color: #aaa;
-            letter-spacing: 1px;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 2px;
         }
-        .dev-badge span { 
-            color: var(--primary); 
-            font-weight: bold;
-        }
+        .dev-badge span { color: var(--primary); }
 
         /* الاستمارة */
-        .form-row { 
-            display: flex; 
-            flex-direction: column;
-            gap: 12px; 
-            margin-bottom: 12px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
 
-        @media (min-width: 480px) {
-            .form-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .form-group { 
-            margin-bottom: 14px; 
-            text-align: right; 
-        }
-
-        label { 
-            color: var(--primary); 
-            font-size: 13px; 
-            font-weight: 800; 
-            display: block; 
-            margin-bottom: 6px; 
-        }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        label { color: var(--primary); font-size: 12px; font-weight: 800; display: block; margin-bottom: 8px; }
         
         input, textarea {
             width: 100%;
             padding: 12px;
-            background: #141414;
-            border: 1px solid #2a2a2a;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #333;
             border-radius: 8px;
             color: #fff;
             outline: none;
             font-size: 14px;
-            transition: border-color 0.3s;
         }
 
-        input:focus, textarea:focus { 
-            border-color: var(--secondary); 
-            box-shadow: 0 0 8px rgba(0, 242, 255, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+        input:focus { border-color: var(--secondary); }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--primary), #b3002a);
+            padding: 15px;
+            background: var(--primary);
             color: #fff;
             border: none;
-            border-radius: 8px;
-            font-family: 'Orbitron', 'Tajawal', sans-serif;
+            border-radius: 10px;
+            font-family: 'Orbitron';
             font-weight: 900;
             font-size: 16px;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4);
-            transition: transform 0.2s, background 0.3s;
+            transition: 0.3s;
         }
 
-        .btn-submit:active { 
-            transform: scale(0.98); 
-        }
+        .btn-submit:hover { filter: brightness(1.2); transform: translateY(-2px); }
 
-        /* خط مسح نيون زيني */
         .scanner {
             position: absolute;
             width: 100%;
             height: 2px;
             background: var(--primary);
             top: 0; left: 0;
-            box-shadow: 0 0 10px var(--primary);
+            box-shadow: 0 0 15px var(--primary);
             animation: scan 4s linear infinite;
-            border-radius: 16px 16px 0 0;
         }
-        @keyframes scan { 
-            0% { top: 0; opacity: 0; } 
-            50% { opacity: 1; }
-            100% { top: 100%; opacity: 0; } 
-        }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
     </style>
 </head>
 <body>
 
     <div id="startOverlay">
-        <button class="start-btn" id="startBtn">دخول النظام</button>
-        <p class="start-subtext">CLICK TO INITIALIZE VISION AI</p>
+        <button class="start-btn" onclick="startSystem()">دخول النظام</button>
+        <p style="margin-top: 15px; color: #444; font-size: 10px; font-family: 'Orbitron';">CORE INITIALIZATION</p>
     </div>
 
     <div class="container" id="mainContainer">
@@ -229,26 +192,26 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>الاسم الحقيقي</label>
-                    <input type="text" id="realName" placeholder="اكتب اسمك الحقيقي" required>
+                    <input type="text" id="realName" required>
                 </div>
                 <div class="form-group">
                     <label>العمر</label>
-                    <input type="number" id="age" placeholder="العمر" required>
+                    <input type="number" id="age" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>اسم الشخصية داخل اللعبة</label>
-                <input type="text" id="charName" placeholder="مثال: Rico_Abdullah" required>
+                <label>اسم الشخصية</label>
+                <input type="text" id="charName" placeholder="Rico_Abdullah" required>
             </div>
 
             <div class="form-group">
                 <label>قصة الشخصية</label>
-                <textarea id="story" placeholder="اكتب قصة مختصرة لشخصيتك..." required></textarea>
+                <textarea id="story" rows="3" required></textarea>
             </div>
 
             <div class="form-group">
-                <label>معرف الديسكورد (Discord Tag)</label>
+                <label>معرف الديسكورد</label>
                 <input type="text" id="discord" placeholder="Username" required>
             </div>
 
@@ -261,47 +224,19 @@
         const WEBHOOK_URL = "ضع_رابط_الويب_هوك_هنا";
 
         function robotSpeak() {
-            try {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    const speech = new SpeechSynthesisUtterance();
-                    speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
-                    speech.lang = 'ar-SA';
-                    speech.rate = 0.9;
-                    window.speechSynthesis.speak(speech);
-                }
-            } catch(e) {
-                console.log("Speech synthesis unsupported or blocked");
+            if ('speechSynthesis' in window) {
+                const speech = new SpeechSynthesisUtterance();
+                speech.text = "يرجى دخول البيانات... أهلاً بك في عالم فليكس سيتي.. المطور ريكو والمطور عبد الله";
+                speech.lang = 'ar-SA';
+                speech.rate = 0.9;
+                window.speechSynthesis.speak(speech);
             }
         }
 
         function startSystem() {
-            try {
-                const overlay = document.getElementById('startOverlay');
-                const container = document.getElementById('mainContainer');
-                
-                if (overlay) overlay.style.display = 'none';
-                if (container) container.style.display = 'block';
-
-                robotSpeak();
-            } catch(e) {
-                document.getElementById('startOverlay').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-            }
-        }
-
-        const overlay = document.getElementById('startOverlay');
-        const startBtn = document.getElementById('startBtn');
-
-        if (overlay) {
-            overlay.addEventListener('click', startSystem);
-            overlay.addEventListener('touchstart', startSystem, {passive: true});
-        }
-        if (startBtn) {
-            startBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                startSystem();
-            });
+            document.getElementById('startOverlay').style.display = 'none';
+            document.getElementById('mainContainer').style.display = 'block';
+            robotSpeak();
         }
 
         document.getElementById('applyForm').addEventListener('submit', async function(e) {
@@ -310,21 +245,21 @@
             
             const data = {
                 embeds: [{
-                    title: "📥 طلب انضمام جديد - VISION RP",
+                    title: "📥 طلب انضمام جديد",
                     color: 16711740,
                     fields: [
-                        { name: "👤 الاسم", value: document.getElementById('realName').value || "غير محدد", inline: true },
-                        { name: "🔞 العمر", value: document.getElementById('age').value || "غير محدد", inline: true },
-                        { name: "🎭 الشخصية", value: document.getElementById('charName').value || "غير محدد", inline: true },
-                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value || "غير محدد", inline: true },
-                        { name: "📜 القصة", value: document.getElementById('story').value || "غير محدد" }
+                        { name: "👤 الاسم", value: document.getElementById('realName').value, inline: true },
+                        { name: "🔞 العمر", value: document.getElementById('age').value, inline: true },
+                        { name: "🎭 الشخصية", value: document.getElementById('charName').value, inline: true },
+                        { name: "🆔 ديسكورد", value: document.getElementById('discord').value, inline: true },
+                        { name: "📜 القصة", value: document.getElementById('story').value }
                     ],
-                    footer: { text: "VISION RP System | By Rico & Abdullah" }
+                    footer: { text: "VISION RP System" }
                 }]
             };
 
-            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا" || !WEBHOOK_URL) {
-                alert("يرجى وضع رابط الويب هوك في الكود أولاً!");
+            if (WEBHOOK_URL === "ضع_رابط_الويب_هوك_هنا") {
+                alert("يرجى وضع رابط الويب هوك أولاً");
                 return;
             }
 
@@ -332,20 +267,15 @@
             btn.innerText = "جاري الإرسال...";
 
             try {
-                const response = await fetch(WEBHOOK_URL, {
+                await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-
-                if (response.ok || response.status === 204) {
-                    alert('✅ تم إرسال طلبك بنجاح إلى السيرفر!');
-                    location.reload();
-                } else {
-                    throw new Error('Server responded with error');
-                }
+                alert('✅ تم الإرسال بنجاح!');
+                location.reload();
             } catch (error) {
-                alert('❌ حدث خطأ أثناء الإرسال، يرجى التأكد من رابط الويب هوك.');
+                alert('❌ فشل الإرسال');
                 btn.disabled = false;
                 btn.innerText = "إرسال البيانات";
             }
